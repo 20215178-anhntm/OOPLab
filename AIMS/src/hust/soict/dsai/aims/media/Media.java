@@ -65,8 +65,4 @@ public abstract class Media {
         return "Media [title=" + title + ", category=" + category + ", cost=" + cost + "]";
     }
 
-
-
-
-
 }

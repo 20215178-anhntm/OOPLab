@@ -4,6 +4,8 @@ import hust.soict.dsai.aims.media.DigitalVideoDisc;
 import hust.soict.dsai.aims.media.Media;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Cart {
@@ -69,5 +71,32 @@ public class Cart {
         System.out.println("Order placed successfully. Your cart has been emptied.");
     }
 
+    public void sortByTitle() {
+        Collections.sort(itemsOrdered, new Comparator<Media>() {
+            @Override
+            public int compare(Media m1, Media m2) {
+                return m1.getTitle().compareTo(m2.getTitle());
+            }
+        });
+    }
+
+    public void sortByCost() {
+        Collections.sort(itemsOrdered, new Comparator<Media>() {
+            @Override
+            public int compare(Media m1, Media m2) {
+                return Float.compare(m2.getCost(), m1.getCost());
+            }
+        });
+    }
+
+    public List<Media> filterByCategory(String category) {
+        List<Media> filteredList = new ArrayList<>();
+        for (Media media : itemsOrdered) {
+            if (media.getCategory().equals(category)) {
+                filteredList.add(media);
+            }
+        }
+        return filteredList;
+    }
 
 }
