@@ -208,10 +208,26 @@ public class Aims {
 
             switch (choice) {
                 case 1:
-                    // Implement filter medias in cart
+                    System.out.println("Sort medias in cart:");
+                    System.out.println("1. Sort by title");
+                    System.out.println("2. Sort by cost");
+                    int sortChoice = Integer.parseInt(scanner.nextLine());
+                    switch (sortChoice) {
+                        case 1:
+                            cart.sortByTitle();
+                            break;
+                        case 2:
+                            cart.sortByCost();
+                            break;
+                        default:
+                            System.out.println("Invalid choice, please try again.");
+                    }
                     break;
                 case 2:
-                    // Implement sort medias in cart
+                    System.out.println("Filter medias in cart:");
+                    System.out.println("Enter the category to filter:");
+                    String categoryFilter = scanner.nextLine();
+                    cart.filterByCategory(categoryFilter);
                     break;
                 case 3:
                     System.out.println("Enter the title of the media to remove:");
