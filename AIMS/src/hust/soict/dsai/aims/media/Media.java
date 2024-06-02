@@ -1,68 +1,75 @@
 package hust.soict.dsai.aims.media;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import hust.soict.dsai.aims.comparator.*;
 
 public abstract class Media {
-    private int id;
-    private String title;
-    private String category;
-    private float cost;
 
-    public static final Comparator<Media> COMPARE_BY_TITLE_COST = new MediaComparatorByTitleCost();
+	public static final Comparator<Media> COMPARE_BY_TITLE_COST = 
+			new MediaComparatorByTitleCost();
+	public static final Comparator<Media> COMPARE_BY_COST_TITLE = 
+			new MediaComparatorByCostTitle();
+	private static int mediaId = 0;
+	private int id;
+	private String title;
+	private String category;
+	private float cost;
+	
+	public Media(String title) {
+		this(title, "", 0.0f);
+	}
+	
+	public Media(String title, String category) {
+		this(title, category, 0.0f);
+	}
+	
+	public Media(String title, String category, float cost) {
+		mediaId++;
+		this.id = mediaId;
+		this.title = title;
+		this.category = category;
+		this.cost = cost;
+	}
+	
+	public int getId() {
+		return id;
+	}
 
-    public static final Comparator<Media> COMPARE_BY_COST_TITLE = new MediaComparatorByCostTitle();
+	public String getTitle() {
+		return title;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getCategory() {
+		return category;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public float getCost() {
+		return cost;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setCost(float cost) {
+		this.cost = cost;
+	}
+	
+	public boolean equals(Object other) {
+		try {
+			Media otherMedia = (Media) other;
+			return this.title.equals(otherMedia.getTitle());
+		} catch (NullPointerException e) {
+			System.err.println("ERROR: Invalid object for comparison");
+		} catch (ClassCastException e) {
+			return false; // Cannot cast other object to Media -> not an instance of Media -> not equal
+		}
+		return false;
+	}
+	
+	public abstract void showDetails();
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public float getCost() {
-        return cost;
-    }
-
-    public void setCost(float cost) {
-        this.cost = cost;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Media media = (Media) obj;
-        return Objects.equals(title, media.title);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title);
-    }
-
-    @Override
-    public String toString() {
-        return "Media [title=" + title + ", category=" + category + ", cost=" + cost + "]";
-    }
-
+	public boolean match(String title, int id) {
+		return (title.equals(this.title)) && (id == this.id);
+	}
 }
